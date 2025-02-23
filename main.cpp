@@ -5,7 +5,20 @@
 using namespace std;
 
 int main() {
+
     string mars = "Mars";
+    string jupiter = "Jupiter";
+    string saturn = "Saturn";
+    string earth = "Earth";
+    string venus = "Venus";
+    SpaceRoute<string> route;
+    route.addWaypointAtBeginning(mars);
+    route.addWaypointAtEnd(earth);
+    route.addWaypointAtIndex(2,jupiter);
+    route.addWaypointAtIndex(2,saturn);
+    route.print();
+
+    /* string mars = "Mars";
     string jupiter = "Jupiter";
     string saturn = "Saturn";
     string earth = "Earth";
@@ -32,5 +45,5 @@ int main() {
     cout << "\nAfter Removing Venus: \n";
     voyagerRoute.print();
 
-    return 0;
+    return 0; */
 }
