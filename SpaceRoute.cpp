@@ -35,7 +35,6 @@ private:
     int length;
 
 public:
-    // Constructor
     SpaceRoute() {
         length = 0;
     }
@@ -119,12 +118,17 @@ public:
             cout << "List Is Empty" << endl;
             return;
         }
-        Node<T>* del = tail;
-        Node<T>* newTail = tail->prev;
-        delete del;
-        tail = newTail;
-        tail -> next = nullptr;
-        length--;
+        if (length==1) {
+            removeWaypointAtBeginning();
+        }
+        else {
+            Node<T>* del = tail;
+            Node<T>* newTail = tail->prev;
+            delete del;
+            tail = newTail;
+            tail -> next = nullptr;
+            length--;
+        }
     }
 
     void removeWaypointAtIndex(int index) {
@@ -133,9 +137,11 @@ public:
         }
         else if (index==length-1) {
             removeWaypointAtEnd();
+
         }
         else if (index==0) {
             removeWaypointAtBeginning();
+
         }
         else {
             Node<T>* del = getWaypoint(index);
@@ -147,16 +153,6 @@ public:
             length--;
         }
     }
-
-
-
-
-
-
-
-
-
-
 
     void traverseForward() {
         if (length == 0) {
@@ -187,6 +183,7 @@ public:
             cout << endl;
         }
     }
+
     Node<T>* getWaypoint(int index) {
         if (index >= length || index < 0) {
             cout << "Waypoint Index Out of Range" << endl;
@@ -205,6 +202,7 @@ public:
             return temp;
         }
     }
+
     void setWaypoint(int index, T& data) {
         if (index >= length || index < 0) {
             cout << "Waypoint Index Out of Range" << endl;
@@ -231,6 +229,5 @@ public:
             }
             cout << endl;
         }
-
 };
 
