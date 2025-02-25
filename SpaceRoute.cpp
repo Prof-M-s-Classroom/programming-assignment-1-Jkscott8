@@ -10,7 +10,7 @@ public:
     Node* prev;
 
     Node(T& d) : data(d), next(nullptr), prev(nullptr) {}
-    void print() { cout << data << " "; }
+    void print() { cout << data << endl; }
 };
 
 class CelestialNode {
@@ -48,16 +48,6 @@ public:
             temp = head;
         }
     }
-    Node<T>* get(int index) {
-        if (index >= length || index < 0) {
-            return NULL;
-        }
-        Node<T>* temp = head;
-        for (int i = 0; i < index; i++) {
-            temp = temp->next;
-        }
-        return temp;
-    }
 
     void addWaypointAtBeginning(T& data) {
         if (length == 0) {
@@ -90,7 +80,6 @@ public:
         }
     }
 
-
     void addWaypointAtIndex(int index, T& data) {
         if (index == 0) {
             addWaypointAtBeginning(data);
@@ -103,8 +92,8 @@ public:
         }
         else {
             Node<T>* node = new Node<T>(data);
-            Node<T>* front = get(index-1);
-            Node<T>* back = get(index);
+            Node<T>* front = getWaypoint(index-1);
+            Node<T>* back = getWaypoint(index);
             node -> next = back;
             node -> prev = front;
             back -> prev = node;
@@ -112,23 +101,129 @@ public:
             length++;
         }
     }
-    // Insert a waypoint at a specified index.
-    void removeWaypointAtBeginning();
-    // Remove the first waypoint from the list.
-    void removeWaypointAtEnd();
-    // Remove the last waypoint from the list.
-    void removeWaypointAtIndex(int index);
-    // Remove a waypoint at a specified index.
-    void traverseForward();
-    // Print all waypoints from the first to the last.
-    void traverseBackward();
-    // Print all waypoints in reverse order from last to first.
-    Node<T>* getWaypoint(int index);
-    // Retrieve a waypoint at a specified index.
-    void setWaypoint(int index, T& data);
-    // Modify the details of a waypoint at a specified index
-    void print(){
 
+    void removeWaypointAtBeginning() {
+        if (length == 0) {
+            cout << "List Is Empty" << endl;
+            return;
+        }
+        Node<T>* del = head;
+        Node<T>* newHead = head->next;
+        head = newHead;
+        delete del;
+        length--;
+    }
+
+    void removeWaypointAtEnd() {
+        if (length == 0) {
+            cout << "List Is Empty" << endl;
+            return;
+        }
+        Node<T>* del = tail;
+        Node<T>* newTail = tail->prev;
+        delete del;
+        tail = newTail;
+        tail -> next = nullptr;
+        length--;
+    }
+
+    void removeWaypointAtIndex(int index) {
+        if (index >= length || index < 0) {
+            cout << "Index Out of Range" << endl;
+        }
+        else if (index==length-1) {
+            removeWaypointAtEnd();
+        }
+        else if (index==0) {
+            removeWaypointAtBeginning();
+        }
+        else {
+            Node<T>* del = getWaypoint(index);
+            Node<T>* front = getWaypoint(index-1);
+            Node<T>* back = getWaypoint(index+1);
+            front->next = back;
+            back -> prev = front;
+            delete del;
+            length--;
+        }
+    }
+
+
+
+
+
+
+
+
+
+
+
+    void traverseForward() {
+        if (length == 0) {
+            cout << "List Is Empty" << endl;
+        }
+        else {
+            cout << "Traversing Forward: " << endl;
+            Node<T>* current = head;
+            while (current != nullptr) {
+                cout << current -> data << endl;
+                current = current -> next;
+            }
+        }
+        cout << endl;
+    }
+
+    void traverseBackward() {
+        if (length == 0) {
+            cout << "List Is Empty" << endl;
+        }
+        else {
+            cout << "Traversing Backward: " << endl;
+            Node<T>* current = tail;
+            while (current != nullptr) {
+                cout << current -> data << endl;
+                current = current -> prev;
+            }
+            cout << endl;
+        }
+    }
+    Node<T>* getWaypoint(int index) {
+        if (index >= length || index < 0) {
+            cout << "Waypoint Index Out of Range" << endl;
+        }
+        else if (index==0) {
+            return head;
+        }
+        else if (index==length-1) {
+            return tail;
+        }
+        else {
+            Node<T>* temp = head;
+            for (int i = 0; i < index; i++) {
+                temp = temp->next;
+            }
+            return temp;
+        }
+    }
+    void setWaypoint(int index, T& data) {
+        if (index >= length || index < 0) {
+            cout << "Waypoint Index Out of Range" << endl;
+        }
+        else if (index==0) {
+            head->data = data;
+        }
+        else if (index==length-1) {
+            tail->data = data;
+        }
+        else {
+            Node<T>* current = getWaypoint(index);
+            current->data = data;
+        }
+    }
+
+
+    void print(){
+        cout << "Priting List: " << endl;
             Node<T>* current = head;
             while (current) {
                 current->print();
