@@ -187,6 +187,7 @@ public:
     Node<T>* getWaypoint(int index) {
         if (index >= length || index < 0) {
             cout << "Waypoint Index Out of Range" << endl;
+            return nullptr;
         }
         else if (index==0) {
             return head;
@@ -203,19 +204,19 @@ public:
         }
     }
 
-    void setWaypoint(int index, T& data) {
+    void setWaypoint(int index, T& newData) {
         if (index >= length || index < 0) {
             cout << "Waypoint Index Out of Range" << endl;
         }
         else if (index==0) {
-            head->data = data;
+            head->data = newData;
         }
         else if (index==length-1) {
-            tail->data = data;
+            tail->data = newData;
         }
         else {
             Node<T>* current = getWaypoint(index);
-            current->data = data;
+            current->data = newData;
         }
     }
 
